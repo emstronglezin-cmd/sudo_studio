@@ -1,14 +1,12 @@
-workflows:
+ workflows:
   electron-vite-react:
     name: "Electron + Vite + React Build"
-    instance_type: linux_x2  # Économique pour Linux builds
+    instance_type: linux_x2
     max_build_duration: 120
     
     environment:
       node: 20
       npm: latest
-      groups:
-        - electron_signing  # Optionnel pour signing certificates
       
     cache:
       cache_paths:
@@ -25,22 +23,18 @@ workflows:
           include: true
     
     scripts:
-      # Nettoie et vérifie
       - name: "Setup project"
         script: |
           echo "Projet Electron détecté"
           ls -la
-          cat package.json | grep electron || echo "Electron non trouvé dans package.json"
+          cat package.json | grep electron || echo "Electron non trouvé"
           
-      # Dependencies
       - name: "Install dependencies"
         script: npm ci
         
-      # Build frontend React avec Vite
       - name: "Build Vite + React"
         script: npm run build
         
-      # Build Electron
       - name: "Electron Builder"
         script: |
           npx electron-builder \
@@ -50,18 +44,10 @@ workflows:
             --publish=never
     
     artifacts:
-      # Linux targets
       - dist/**/*.deb
-      - dist/**/*.rpm  
+      - dist/**/*.rpm
       - dist/**/*.AppImage
-      # Windows
       - dist/**/*.exe
       - dist/**/*.nsis
-      # macOS
       - dist/*.dmg
       - dist/*.zip
-      
-    publishing:
-      email:
-        recipients:
-          - ton@email@example.com  # Ton email
