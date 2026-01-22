@@ -1,0 +1,5 @@
+productName: Sudo Studio
+files:
+  - dist/**
+  - electron/**
+  - assets/**

@@ -1,0 +1,28 @@
+/* VS Code Theme Overrides */
+
+body {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Panels */
+.panel {
+  background-color: #252526;
+  border-color: #3c3c3c;
+}
+
+/* Text */
+.text-primary {
+  color: #d4d4d4;
+}
+
+/* Accent */
+.accent {
+  color: #007acc;
+}
+
+/* Monospace */
+.monospace {
+  font-family: 'Courier New', Courier, monospace;
+}

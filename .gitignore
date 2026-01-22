@@ -1,0 +1,16 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+
+# Firebase keys
+backend/config/sudo-studio-522bb-firebase-adminsdk-fbsvc-9d13a4a831.json
+
+# Build output
+dist/
+build/
