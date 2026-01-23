@@ -1,5 +1,5 @@
 {
-  "name": "sudo-studio",
+ "name": "sudo-studio",
   "version": "1.0.0",
   "private": true,
   "main": "electron/main.js",
@@ -37,5 +37,24 @@
     "@codemirror/basic-setup": "^0.19.1",
     "@codemirror/lang-javascript": "^0.19.1",
     "@codemirror/theme-one-dark": "^0.19.1"
+ "build": {
+  "appId": "com.sudostudio.app",
+  "productName": "Sudo Studio",
+  "directories": {
+    "output": "dist"
+  },
+  "files": [
+    "frontend/dist/**/*",
+    "electron/**/*",
+    "backend/**/*",
+    "package.json"
+  ],
+  "linux": {
+    "target": [
+      "AppImage"
+    ]
+  },
+  "publish": "never"
+}
   }
 }
