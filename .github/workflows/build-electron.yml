@@ -10,29 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
+          cache: npm
 
       - name: Install dependencies
-        run: npm ci  # Plus fiable que npm install pour CI
+        run: npm install
 
-      - name: Build frontend (Vite + React + CSS)
-        env:
-          NODE_ENV: production
-          VITE_BUILD: true
+      - name: Build frontend (Vite)
         run: npm run build
 
-      - name: Build Electron app
-        run: npm run electron:build -- --publish=never
+      - name: Build Electron (no publish)
+        env:
+          GH_TOKEN: ""
+        run: npm run electron:build
 
-      - name: Upload artifacts
+      - name: Upload AppImage
         uses: actions/upload-artifact@v4
         with:
-          name: sudo-studio-builds
-          path: dist/*
+          name: sudo-studio-linux
+          path: dist-electron/**/*.AppImage
+          
