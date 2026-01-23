@@ -31,6 +31,9 @@
     "react-dom": "^19.2.0",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "@codemirror/basic-setup": "^0.19.1",
+    "@codemirror/lang-javascript": "^0.19.1",
+    "@codemirror/theme-one-dark": "^0.19.1"
   }
 }

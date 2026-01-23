@@ -15,7 +15,10 @@ const Layout = () => {
         <Editor />
         <PapitoChat />
       </div>
-      <Terminal />
+      <div className="flex flex-row">
+        <Terminal />
+        <EmulatorPanel />
+      </div>
     </div>
   );
 };
