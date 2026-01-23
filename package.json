@@ -3,14 +3,40 @@
   "version": "1.0.0",
   "private": true,
   "main": "electron/main.js",
+
   "scripts": {
     "dev": "concurrently \"npm run backend\" \"npm run frontend\" \"npm run electron\"",
     "start": "npm --prefix electron start",
-    "build": "electron-builder",
+
+    "build": "npm run build:frontend && electron-builder",
+    "build:frontend": "cd frontend && npm run build",
+
     "backend": "cd backend && node download-models.js && npm start",
     "frontend": "cd frontend && npm run dev",
     "electron": "cd electron && electron ."
   },
+
+  "build": {
+    "appId": "com.sudostudio.app",
+    "productName": "Sudo Studio",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "frontend/dist/**",
+      "electron/**",
+      "backend/**",
+      "package.json"
+    ],
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Development"
+    },
+    "publish": "never"
+  },
+
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
@@ -19,6 +45,7 @@
     "electron-builder": "^26.0.12",
     "vite": "^4.5.14"
   },
+
   "dependencies": {
     "all": "^0.0.0",
     "axios": "^1.13.2",
