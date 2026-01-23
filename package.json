@@ -17,6 +17,7 @@
     "electron": "cd electron && electron .",
 
     "build": "npm run frontend:build && electron-builder"
+    "electron:build": "electron-builder"
   },
 
   "build": {
