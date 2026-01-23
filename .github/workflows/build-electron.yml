@@ -17,12 +17,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci  # Plus fiable que npm install pour CI
 
-      - name: Build frontend (Vite)
+      - name: Build frontend (Vite + React + CSS)
+        env:
+          NODE_ENV: production
+          VITE_BUILD: true
         run: npm run build
 
       - name: Build Electron app
         run: npm run electron:build -- --publish=never
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sudo-studio-builds
+          path: dist/*
