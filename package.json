@@ -1,23 +1,20 @@
 {
- "name": "sudo-studio",
+  "name": "sudo-studio",
   "version": "1.0.0",
   "private": true,
+  "description": "Sudo Studio - VS Code like IDE with AI",
   "main": "electron/main.js",
-  "description": "Sudo Studio - VS Code-like IDE with AI and Emulator",
-  "author": "Emstrong Lezin",
+  "author": "Emstrong",
+  "license": "MIT",
+
   "scripts": {
     "dev": "concurrently \"npm run backend\" \"npm run frontend\" \"npm run electron\"",
-
-    "frontend": "cd frontend && npm run dev",
-    "frontend:build": "cd frontend && npm run build",
-
     "backend": "cd backend && node download-models.js && npm start",
-
+    "frontend": "cd frontend && npm run dev",
     "electron": "cd electron && electron .",
-
-    "build": "npm run frontend:build && electron-builder",
-    "electron:build": "electron-builder"
+    "build": "electron-builder --linux"
   },
+
   "devDependencies": {
     "concurrently": "^8.2.2",
     "electron": "^28.2.1",
@@ -25,36 +22,36 @@
     "vite": "^4.5.14",
     "@vitejs/plugin-react": "^4.0.0"
   },
+
   "dependencies": {
-    "axios": "^1.13.2",
+    "axios": "^1.6.8",
     "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "fs-extra": "^11.3.2",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "express": "^4.19.2",
+    "fs-extra": "^11.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "@codemirror/basic-setup": "^0.19.1",
     "@codemirror/lang-javascript": "^0.19.1",
     "@codemirror/theme-one-dark": "^0.19.1"
- "build": {
-  "appId": "com.sudostudio.app",
-  "productName": "Sudo Studio",
-  "directories": {
-    "output": "dist"
   },
-  "files": [
-    "frontend/dist/**/*",
-    "electron/**/*",
-    "backend/**/*",
-    "package.json"
-  ],
-  "linux": {
-    "target": [
-      "AppImage"
-    ]
-  },
-  "publish": "never"
-}
+
+  "build": {
+    "appId": "com.sudostudio.app",
+    "productName": "Sudo Studio",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "frontend/dist/**/*",
+      "backend/**/*",
+      "package.json"
+    ],
+    "linux": {
+      "target": "AppImage"
+    },
+    "publish": "never"
   }
 }
