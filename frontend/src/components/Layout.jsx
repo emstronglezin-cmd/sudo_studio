@@ -5,6 +5,8 @@ import Editor from './Editor';
 import Terminal from './Terminal';
 import PapitoChat from './PapitoChat';
 import EmulatorPanel from './EmulatorPanel';
+import EnvironmentChecker from './EnvironmentChecker';
+import SDKInstaller from './SDKInstaller';
 
 const Layout = () => {
   return (
@@ -18,6 +20,10 @@ const Layout = () => {
       <div className="flex flex-row">
         <Terminal />
         <EmulatorPanel />
+      </div>
+      <div className="flex flex-row p-4 bg-gray-800 text-white">
+        <EnvironmentChecker />
+        <SDKInstaller />
       </div>
     </div>
   );
