@@ -8,13 +8,15 @@
   "license": "MIT",
 
   "scripts": {
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\" \"npm run electron\"",
-    "backend": "cd backend && node download-models.js && npm start",
-    "frontend": "cd frontend && npm run dev",
-    "electron": "cd electron && electron .",
+  "dev": "concurrently \"npm run backend\" \"npm run frontend\" \"npm run electron\"",
 
-    "build": "electron-builder --linux --publish=never"
-  },
+  "backend": "cd backend && node download-models.js && npm start",
+  "frontend": "cd frontend && npm run dev",
+  "electron": "cd electron && electron .",
+
+  "build": "electron-builder --linux --publish=never",
+  "electron:build": "electron-builder --linux --publish=never"
+}
 
   "devDependencies": {
     "concurrently": "^8.2.2",
