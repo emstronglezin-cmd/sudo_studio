@@ -7,37 +7,24 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: npm
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build frontend (Vite)
+      - name: Build Electron (Windows + Linux)
         run: npm run build
 
-      - name: Build Electron (no publish)
-        env:
-          GH_TOKEN: ""
-        run: npm run electron:build
-
-      - name: Upload AppImage
-        uses: actions/upload-artifact@v4
-        with:
-          name: sudo-studio-linux
-          path: dist-electron/**/*.AppImage
-      - name: Upload Electron artifact
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: sudo-studio-build
           path: dist/
-          
