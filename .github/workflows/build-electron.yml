@@ -35,4 +35,9 @@ jobs:
         with:
           name: sudo-studio-linux
           path: dist-electron/**/*.AppImage
+      - name: Upload Electron artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sudo-studio-build
+          path: dist/
           
