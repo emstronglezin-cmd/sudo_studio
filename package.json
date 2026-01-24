@@ -12,7 +12,8 @@
     "backend": "cd backend && node download-models.js && npm start",
     "frontend": "cd frontend && npm run dev",
     "electron": "cd electron && electron .",
-    "build": "electron-builder --linux"
+
+    "build": "electron-builder --linux --publish=never"
   },
 
   "devDependencies": {
