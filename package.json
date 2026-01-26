@@ -38,22 +38,19 @@
   },
 
   "build": {
-    "appId": "com.sudostudio.app",
+    "appId": "com.sudo.studio",
     "productName": "Sudo Studio",
+    "files": [
+      "electron/",
+      "frontend/dist/",
+      "backend/",
+      "package.json"
+    ],
     "directories": {
       "output": "dist"
     },
-    "files": [
-      "electron/**/*",
-      "frontend/dist/**/*",
-      "backend/**/*",
-      "package.json"
-    ],
     "win": {
-      "target": ["nsis", "portable"]
-    },
-    "linux": {
-      "target": ["AppImage"]
+      "target": "nsis"
     }
   }
 }

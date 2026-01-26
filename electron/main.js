@@ -1,10 +1,9 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-
-// Désactiver le service réseau pour éviter l'erreur "Network service crashed"
-app.commandLine.appendSwitch('disable-features', 'NetworkService');
+const { spawn } = require('child_process');
 
 let mainWindow;
+let backendProcess;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -13,26 +12,25 @@ function createWindow() {
     backgroundColor: '#1e1e1e', // Fond sombre pour éviter l'écran noir
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: false,
       contextIsolation: true,
-      enableRemoteModule: false, // Désactiver les modules distants pour plus de sécurité
+      nodeIntegration: false,
+      enableRemoteModule: false,
       sandbox: false, // Désactiver temporairement le sandboxing pour déboguer
       webSecurity: true, // Réactiver la sécurité web
       allowRunningInsecureContent: false, // Désactiver le contenu non sécurisé
     },
   });
 
-  // Mise à jour du chemin pour utiliser le dossier dist à la racine
-  const indexPath = path.join(__dirname, '..', 'dist', 'index.html');
-  console.log('Chargement du fichier HTML depuis :', indexPath);
-
-  mainWindow.loadFile(indexPath)
-    .then(() => {
-      console.log('Fichier HTML chargé avec succès.');
-    })
-    .catch((err) => {
+  if (app.isPackaged) {
+    const indexPath = path.join(__dirname, '../frontend/dist/index.html');
+    mainWindow.loadFile(indexPath).catch((err) => {
       console.error('Erreur lors du chargement du fichier HTML :', err);
     });
+  } else {
+    mainWindow.loadURL('http://localhost:5173').catch((err) => {
+      console.error('Erreur lors du chargement de l\'URL DEV :', err);
+    });
+  }
 
   mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
     console.error(`Erreur de chargement (${errorCode}): ${errorDescription}`);
@@ -105,7 +103,27 @@ function createWindow() {
   });
 }
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+  // Lancer le backend
+  const backendPath = app.isPackaged
+    ? path.join(__dirname, '../backend/server.js')
+    : path.join(__dirname, '../backend/server.js');
+
+  backendProcess = spawn('node', [backendPath], {
+    stdio: 'inherit',
+    shell: true,
+  });
+
+  backendProcess.on('error', (err) => {
+    console.error('Erreur lors du démarrage du backend :', err);
+  });
+
+  backendProcess.on('exit', (code) => {
+    console.log(`Le backend s'est arrêté avec le code : ${code}`);
+  });
+
+  createWindow();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
