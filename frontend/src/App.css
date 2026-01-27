@@ -1,14 +1,24 @@
 body {
   margin: 0;
+  padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police monospace */
   background-color: #1e1e1e; /* Fond sombre */
   color: #d4d4d4; /* Texte clair */
+  overflow: hidden;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .App {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 .top-bar {
@@ -18,6 +28,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.layout {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  height: calc(100vh - 50px);
+  overflow: hidden;
 }
 
 .sidebar {
@@ -27,6 +46,8 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
+  border-right: 1px solid #3e3e42;
 }
 
 .editor {
@@ -34,6 +55,7 @@ body {
   display: flex;
   flex-direction: column;
   background-color: #1e1e1e;
+  overflow: hidden;
 }
 
 .terminal {
@@ -42,6 +64,7 @@ body {
   height: 200px;
   overflow: auto;
   border-top: 1px solid #444;
+  flex-shrink: 0;
 }
 
 button {

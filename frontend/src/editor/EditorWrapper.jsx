@@ -1,44 +1,53 @@
 import React, { useEffect, useRef } from 'react';
-import * as monaco from 'monaco-editor';
+import { EditorView, basicSetup } from 'codemirror';
+import { EditorState } from '@codemirror/state';
+import { javascript } from '@codemirror/lang-javascript';
+import { oneDark } from '@codemirror/theme-one-dark';
+import { keymap } from '@codemirror/view';
+import { defaultKeymap } from '@codemirror/commands';
+import { history, historyKeymap } from '@codemirror/history';
+import { foldGutter, foldKeymap } from '@codemirror/fold';
+import { indentOnInput } from '@codemirror/language';
+import { lineNumbers, highlightActiveLineGutter } from '@codemirror/gutter';
+import { highlightSelectionMatches } from '@codemirror/search';
+import { bracketMatching } from '@codemirror/matchbrackets';
+import { closeBrackets, closeBracketsKeymap } from '@codemirror/closebrackets';
+import { autocompletion, completionKeymap } from '@codemirror/autocomplete';
 
 const EditorWrapper = () => {
   const editorRef = useRef(null);
 
   useEffect(() => {
     if (editorRef.current) {
-      const editor = monaco.editor.create(editorRef.current, {
-        value: '// Écrivez votre code ici',
-        language: 'javascript',
-        theme: 'vs-dark',
-        automaticLayout: true,
+      const editor = new EditorView({
+        state: EditorState.create({
+          doc: '// Écrivez votre code ici',
+          extensions: [
+            basicSetup,
+            javascript(),
+            oneDark,
+            lineNumbers(),
+            highlightActiveLineGutter(),
+            highlightSelectionMatches(),
+            history(),
+            foldGutter(),
+            indentOnInput(),
+            bracketMatching(),
+            closeBrackets(),
+            autocompletion(),
+            keymap.of([...defaultKeymap, ...historyKeymap, ...foldKeymap, ...closeBracketsKeymap, ...completionKeymap]),
+          ],
+        }),
+        parent: editorRef.current,
       });
 
-      // Configuration des workers pour Electron
-      window.MonacoEnvironment = {
-        getWorkerUrl: function (moduleId, label) {
-          if (label === 'json') {
-            return './monaco-editor/json.worker.js';
-          }
-          if (label === 'css' || label === 'scss' || label === 'less') {
-            return './monaco-editor/css.worker.js';
-          }
-          if (label === 'html' || label === 'handlebars' || label === 'razor') {
-            return './monaco-editor/html.worker.js';
-          }
-          if (label === 'typescript' || label === 'javascript') {
-            return './monaco-editor/ts.worker.js';
-          }
-          return './monaco-editor/editor.worker.js';
-        },
-      };
-
       return () => {
-        editor.dispose();
+        editor.destroy();
       };
     }
   }, []);
 
-  return <div ref={editorRef} style={{ height: '100vh', width: '100%' }} />;
+  return <div ref={editorRef} style={{ height: '100%', width: '100%' }} />;
 };
 
 export default EditorWrapper;

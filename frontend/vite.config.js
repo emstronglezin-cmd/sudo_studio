@@ -3,7 +3,7 @@ import { resolve } from 'path';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  root:'.',
+  root: '.',
   plugins: [react()],
   base: './',
   resolve: {
@@ -12,7 +12,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: '../dist', // Ensure alignment with Electron's dist folder
+    outDir: '../dist',
     emptyOutDir: true,
     rollupOptions: {
       output: {
@@ -22,22 +22,23 @@ export default defineConfig({
       },
     },
   },
-optimizeDeps: {
-  include:['monaco-editor'],
-  exclude: ['electron'], // Exclude Electron from optimized dependencies
-},
+  optimizeDeps: {
+    include: ['@codemirror/basic-setup', '@codemirror/lang-javascript', '@codemirror/theme-one-dark'],
+    exclude: ['electron'],
+  },
   server: {
-    port: 3000,
+    port: 5173,
+    strictPort: false,
     proxy: {
       '/api': {
-        target: 'http://localhost:5000', // Backend port
+        target: 'http://localhost:5000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
   define: {
-    'process.env': {}, // Define an empty object to avoid process.env errors
+    'process.env': {},
   },
   worker: {
     plugins: [],
